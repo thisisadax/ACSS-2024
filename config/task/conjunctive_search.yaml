@@ -1,0 +1,10 @@
+defaults:
+  - base_vlm_task
+_target_: tasks.search.ConjunctiveSearch
+task_name: 'conjunctive_search' # Name of the task
+n_objects: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50] # Number of objects in the display
+n_trials: 10 # Number of trials to generate per condition
+size: 22
+color_names: ['red', 'green']
+prompt_path: '${.root_dir}/prompts/conjunctive_search.txt'
+font_path: '/System/Library/Fonts/Supplemental/Arial Black.ttf'

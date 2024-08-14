@@ -1,0 +1,18 @@
+{
+    "contents": [
+        {
+            "parts": [
+                {"text": ""},
+                {
+                    "inline_data": {
+                        "mime_type": "image/jpeg",
+                        "data": ""
+                    }
+                }
+            ]
+        }
+    ],
+    "generationConfig": {
+        "maxOutputTokens": null
+    }
+}

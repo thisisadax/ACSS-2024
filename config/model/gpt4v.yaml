@@ -1,0 +1,5 @@
+defaults:
+  - base_vlm
+_target_: models.gpt4_model.GPT4Model
+model_name: gpt4v
+payload_path: '${paths.root_dir}/payloads/${.model_name}.json'

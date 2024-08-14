@@ -1,0 +1,23 @@
+{
+    "model": "claude-3-5-sonnet-20240620",
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": null
+                },
+                {
+                    "type": "base64",
+                    "source": {
+                        "type": "base64",
+                        "media_type": "image/png",
+                        "data": null
+                    }
+                }
+            ]
+        }
+    ],
+    "max_tokens": null
+}

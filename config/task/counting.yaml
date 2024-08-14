@@ -1,0 +1,9 @@
+defaults:
+  - base_vlm_task
+_target_: tasks.counting.Counting
+task_name: 'counting' # Name of the task
+n_objects: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] # Number of objects in the display
+n_trials: 500 # Number of trials to generate per condition
+min_size: 20
+max_size: 40
+prompt_path: '${.root_dir}/prompts/counting.txt'

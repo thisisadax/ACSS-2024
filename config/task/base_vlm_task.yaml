@@ -1,0 +1,6 @@
+task_variant: '2D' # Variant of the task to load
+model_name: '${model.model_name}' # model name
+root_dir: '${paths.root_dir}' # basepath
+data_dir: '${paths.data_dir}' # Output directory to save the dataset trials
+output_dir: '${paths.output_dir}' # Output directory for saving the results
+metadata_file: 'metadata.csv' # File to save the metadata to

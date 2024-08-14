@@ -1,0 +1,5 @@
+api_file: '${paths.root_dir}/api_metadata.json'
+max_tokens: 512
+sleep: 0
+shuffle: true
+n_trials: 2
