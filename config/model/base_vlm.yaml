@@ -1,4 +1,5 @@
 api_file: '${paths.root_dir}/api_metadata.json'
+model_name: 'base_vlm'
 max_tokens: 512
 sleep: 0
 shuffle: true

@@ -60,7 +60,7 @@ class GeminiModel(APIModel):
         return response
     
 
-    #@retry(wait=wait_exponential(multiplier=1, min=1, max=20), stop=stop_after_attempt(10))
+    @retry(wait=wait_exponential(multiplier=1, min=1, max=20), stop=stop_after_attempt(10))
     def run_single_request(self, prompt: str, image: str):
         if os.path.exists(image):
             with open(image, 'rb') as image_file:

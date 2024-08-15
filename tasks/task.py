@@ -2,6 +2,7 @@ import os
 from typing import List
 from pathlib import Path
 import pandas as pd
+import torch
 
 class Task:
     def __init__(self, 
@@ -30,13 +31,17 @@ class Task:
         if os.path.exists(self.results_path):
             print(f'Loading task metadata from {self.results_path}...')
             self.results_df = pd.read_csv(self.results_path)
+            self.dataset_tensor = torch.load(os.path.join(self.data_dir, self.task_name, 'images.pt'))
         elif os.path.exists(task_path):
             print(f'Loading task metadata from {task_path}...')
             self.results_df = pd.read_csv(task_path)
+            self.dataset_tensor = torch.load(os.path.join(self.data_dir, self.task_name, 'images.pt'))
         else:
             print('Generating full dataset...')
-            self.results_df = self.generate_full_dataset()
+            self.results_df, img_tensor = self.generate_full_dataset()
             self.results_df.to_csv(task_path, index=False)
+            self.dataset_tensor = img_tensor
+            torch.save(img_tensor, os.path.join(self.data_dir, self.task_name, 'images.pt'))
             return None
 
     def generate_full_dataset(self):

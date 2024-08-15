@@ -7,6 +7,8 @@ from PIL import Image, ImageDraw, ImageFont
 from tqdm import tqdm
 from utils import *
 from tasks.task import Task
+from torchvision.transforms import functional as TF
+import torch
 
 class ConjunctiveSearch(Task):
 	
@@ -31,6 +33,7 @@ class ConjunctiveSearch(Task):
 		img1 = self.letter_img('L')
 		img2 = self.letter_img('T')
 		metadata_df = pd.DataFrame(columns=['path', 'popout', 'n_objects', 'response', 'answer'])
+		images = [] # also save a tensor of the images
 		for n in tqdm(self.n_objects):
 			for i in range(self.n_trials):
 				congruent_trial = self.make_trial(img1, img2, rgb_values[0], rgb_values[1], n, False, self.size)
@@ -39,6 +42,8 @@ class ConjunctiveSearch(Task):
 				incongruent_path = os.path.join(img_path, f'incongruent-{n}_{i}.png').split(self.root_dir+'/')[1]
 				congruent_trial.save(congruent_path)
 				incongruent_trial.save(incongruent_path)
+				images.append(TF.to_tensor(congruent_trial))
+				images.append(TF.to_tensor(incongruent_trial))
 				metadata_df = metadata_df._append({
 					'path': congruent_path,
 					'incongruent': False,
@@ -47,7 +52,7 @@ class ConjunctiveSearch(Task):
 					'path': incongruent_path,
 					'incongruent': True,
 					'n_objects': n }, ignore_index=True)
-		return metadata_df
+		return metadata_df, torch.stack(images)
 
 	
 	def make_trial(self,

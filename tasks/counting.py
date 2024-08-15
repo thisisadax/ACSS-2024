@@ -8,6 +8,8 @@ from tqdm import tqdm
 from utils import *
 from tasks.task import Task
 from pathlib import Path
+from torchvision.transforms import functional as TF
+import torch
 
 
 class Counting(Task):
@@ -30,6 +32,7 @@ class Counting(Task):
         metadata_df = pd.DataFrame(columns=['path', 'n_objects', 'response'])
         palette = create_palette(palette_size=max(self.n_objects), grid_size=256, grid_space='JCh')
         rgb_colors = np.array([mcolors.hex2color(color) for color in palette])
+        images = [] # also save a tensor of the images
         for n in tqdm(self.n_objects):
             for i in range(self.n_trials):
                 shape_inds = np.random.choice(len(imgs), n, replace=False)
@@ -39,8 +42,9 @@ class Counting(Task):
                 trial = self.make_trial(shapes, colors, size_range=(self.min_size, self.max_size))
                 trial_path = os.path.join(img_path, f'nObjects={n}_trial={i}.png').split(self.root_dir+'/')[1]
                 trial.save(trial_path)
-                metadata_df = metadata_df._append({'path': trial_path, 'n_objects': n }, ignore_index=True)
-        return metadata_df
+                images.append(TF.to_tensor(trial))
+                metadata_df = metadata_df._append({'path': trial_path, 'n_objects': n}, ignore_index=True)
+        return metadata_df, torch.stack(images)
 
     def make_trial(self, shape_imgs, colors, size_range=(10, 20)):
         sizes = np.random.randint(size_range[0], size_range[1], len(shape_imgs))
