@@ -43,7 +43,7 @@ class AttentionPooler(Module):
 
 
 class MLP(Module, ABC):
-    def __init__(self, input_dim, hidden_dim, output_dim, dropout_prob=0.2, single_span=True):
+    def __init__(self, input_dim, hidden_dim, output_dim, dropout_prob=0.25, single_span=True):
         super().__init__()
 
         if not single_span:
@@ -68,7 +68,7 @@ class MLP(Module, ABC):
         '''
 
 
-class CampbellMLP(MLP):
+class SimpleMLP(MLP):
 
     def _build_mlp(self):
         return Sequential(
